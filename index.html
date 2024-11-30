@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test d'Amour -H&L</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      color: #ff6347;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+      font-weight: bold;
+    }
+
+    #question-container {
+      background-color: #1f1f1f;
+      padding: 30px;
+      border-radius: 15px;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s ease-in-out;
+      border: 2px solid #ff6347; /* Effet de bordure pour ressembler à une facture */
+    }
+
+    #question-container:hover {
+      transform: scale(1.05);
+    }
+
+    .question {
+      margin-bottom: 20px;
+      font-size: 1em; /* Réduire la taille du texte */
+      color: #ccc;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+      border-radius: 10px;
+      border: 2px solid #444;
+      background-color: #333;
+      color: white;
+      font-size: 0.9em;
+      transition: border-color 0.3s, background-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #ff6347;
+      background-color: #444;
+    }
+
+    button {
+      background-color: #ff6347;
+      color: white;
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+      background-color: #ff4500;
+      transform: scale(1.1);
+    }
+
+    .result {
+      font-size: 1.2em;
+      margin-top: 20px;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .result.success {
+      color: #32cd32;
+    }
+
+    .result.error {
+      color: #ff0000;
+    }
+
+    .response-list {
+      text-align: left;
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #444;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .response-item {
+      margin-bottom: 10px;
+    }
+
+    .incorrect {
+      color: #ff0000;
+    }
+
+    .correct {
+      color: #32cd32;
+    }
+
+    #site-content {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #2a2a2a;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    }
+
+    #site-content h2 {
+      font-size: 2em;
+      color: #ff6347;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    #site-content p {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: #ddd;
+    }
+
+    #site-content img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    #site-content {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .orange-text {
+      color: orange;
+      font-size: 2em; /* Ajustez la taille de la police */
+    }
+  </style>
+</head>
+<body>
+  <div id="question-container">
+    <h1>Test d'Amour - Hassan & Laila </h1>
+
+    <div class="question">
+      <label for="prenom">Quel est mon prénom ?</label>
+      <input type="text" id="prenom" placeholder="Entrez votre réponse" />
+    </div>
+
+    <div class="question">
+      <label for="jour">Quel est le jour de ma naissance ?</label>
+      <input type="text" id="jour" placeholder="Entrez votre réponse" />
+    </div>
+
+    <div class="question">
+      <label for="mois">Quel est le mois de ma naissance(en chiffre) ?</label>
+      <input type="text" id="mois" placeholder="Entrez votre réponse" />
+    </div>
+
+    <div class="question">
+      <label for="couleur">Quelle est ma couleur préférée ?</label>
+      <input type="text" id="couleur" placeholder="Entrez votre réponse" />
+    </div>
+
+    <div class="question">
+      <label for="team">Quelle est ma team préférée ?</label>
+      <input type="text" id="team" placeholder="Entrez votre réponse" />
+    </div>
+
+    <button onclick="checkAnswers()">Vérifier les réponses</button>
+
+    <div class="result" id="result"></div>
+
+    <div class="response-list" id="response-list"></div>
+  </div>
+
+  <div id="site-content">
+    <h2>Bienvenue  LAILA !!!!!!!!!!!!!!!!!!!!</h2>
+    <p class="orange-text" style="color: orange; text-decoration: underline;">TALAYLAT INO ,ZIN DYALI ,LHBIBA DYALI, LKBIDA DYALI ,L3MER DYALI , b4it ngol liiiiiiiiiiiiiiiiiiK :(VOIR L`IMAGE )</p>
+
+    <img src="img.jpeg" alt="Image de Hassan" />
+  </div>
+
+  <script>
+    function checkAnswers() {
+      const prenom = document.getElementById('prenom').value.toLowerCase();
+      const jour = document.getElementById('jour').value;
+      const mois = document.getElementById('mois').value;
+      const couleur = document.getElementById('couleur').value.toLowerCase();
+      const team = document.getElementById('team').value.toLowerCase();
+
+      let isCorrect = true;
+      const correctAnswers = {
+        prenom: 'hassan',
+        jour: '13',
+        mois: ['juin', '06', '6'],
+        couleur: 'noire',
+        team: 'barca'
+      };
+
+      const responseList = document.getElementById('response-list');
+      responseList.innerHTML = ''; // Clear previous responses
+
+      if (prenom === correctAnswers.prenom) {
+        addResponse('Quel est mon prénom ?', prenom, 'correct');
+      } else {
+        isCorrect = false;
+        addResponse('Quel est mon prénom ?', prenom, 'incorrect');
+      }
+
+      if (correctAnswers.mois.includes(mois.toLowerCase())) {
+        addResponse('Quel est le mois de ma naissance ?', mois, 'correct');
+      } else {
+        isCorrect = false;
+        addResponse('Quel est le mois de ma naissance ?', mois, 'incorrect');
+      }
+
+      if (jour === correctAnswers.jour) {
+        addResponse('Quel est le jour de ma naissance ?', jour, 'correct');
+      } else {
+        isCorrect = false;
+        addResponse('Quel est le jour de ma naissance ?', jour, 'incorrect');
+      }
+
+      if (couleur === correctAnswers.couleur) {
+        addResponse('Quelle est ma couleur préférée ?', couleur, 'correct');
+      } else {
+        isCorrect = false;
+        addResponse('Quelle est ma couleur préférée ?', couleur, 'incorrect');
+      }
+
+      if (team === correctAnswers.team) {
+        addResponse('Quelle est ma team préférée ?', team, 'correct');
+      } else {
+        isCorrect = false;
+        addResponse('Quelle est ma team préférée ?', team, 'incorrect');
+      }
+
+      const resultElement = document.getElementById('result');
+      if (isCorrect) {
+        resultElement.textContent = 'Bravo ! Vous avez répondu correctement à toutes les questions.';
+        resultElement.classList.add('success');
+        resultElement.classList.remove('error');
+        document.getElementById('site-content').style.display = 'block';
+      } else {
+        resultElement.textContent = 'Désolé, certaines réponses sont incorrectes.';
+        resultElement.classList.add('error');
+        resultElement.classList.remove('success');
+      }
+    }
+
+    function addResponse(question, response, status) {
+      const responseItem = document.createElement('div');
+      responseItem.classList.add('response-item', status);
+      responseItem.textContent = `${question} - Réponse: ${response}`;
+      document.getElementById('response-list').appendChild(responseItem);
+    }
+  </script>
+</body>
+</html>
